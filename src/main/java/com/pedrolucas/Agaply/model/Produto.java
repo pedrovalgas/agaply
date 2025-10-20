@@ -28,6 +28,10 @@ public class Produto {
 
     private String descricao;
 
+    private boolean ativo;
+
+    private int quantidadeMinima = 0;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;

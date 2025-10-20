@@ -1,5 +1,7 @@
 package com.pedrolucas.Agaply.dto.produto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,19 +9,22 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProdutoRequestDTO {
+public record ProdutoRequestDTO(
 
-    private String nome;
-    private String codigoDeBarras;
-    private BigDecimal preco;
-    private String descricao;
-    private Long categoriaId;
-    private Long fornecedorId;
-    private BigDecimal quantidadeInicial;
-    private BigDecimal quantidadeMinima;
+        @NotBlank
+        String nome,
 
+        String codigoDeBarras,
+
+        @NotNull
+        BigDecimal preco,
+
+        String descricao,
+
+        @NotNull
+        Long categoriaId,
+
+        @NotNull
+        Long fornecedorId
+) {
 }
