@@ -29,6 +29,10 @@ public class ProdutoService {
         if (produtoRepository.existsByNome(dto.nome())){
             throw new ConflictException("Nome do produto já existe");
         }
+        if (dto.quantidadeMinima() < 0){
+            throw new InvalidFieldException("Quantidade mínima não pode ser menor que 0");
+        }
+
         var fornecedor = fornecedorRepository.findById(dto.fornecedorId())
                 .orElseThrow(() -> new FornecedorNotFoundException("Fornecedor não encontrado"));
 
@@ -58,6 +62,9 @@ public class ProdutoService {
     public ProdutoResponseDTO update(Long id, ProdutoUpdateDTO dto){
         if (produtoRepository.existsByNomeAndIdNot(dto.nome(), id)) {
             throw new ConflictException("Nome do produto já existe");
+        }
+        if (dto.quantidadeMinima() < 0){
+            throw new InvalidFieldException("Quantidade mínima não pode ser menor que 0");
         }
 
         var fornecedor = fornecedorRepository.findById(dto.fornecedorId())

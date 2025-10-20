@@ -1,5 +1,7 @@
 package com.pedrolucas.Agaply.dto.produto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 public record ProdutoResponseDTO(
@@ -15,6 +17,10 @@ public record ProdutoResponseDTO(
 
         String categoria,
 
-        String fornecedor
+        String fornecedor,
+
+        int quantidadeMinima,
+
+        int quantidadeAtual
 ) {
 }

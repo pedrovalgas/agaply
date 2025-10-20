@@ -14,6 +14,10 @@ public record ProdutoUpdateDTO(
 
         Long categoriaId,
 
-        Long fornecedorId
+        Long fornecedorId,
+
+        int quantidadeMinima,
+
+        int quantidadeAtual
 ) {
 }

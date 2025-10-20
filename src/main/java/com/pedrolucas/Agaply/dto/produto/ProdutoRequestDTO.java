@@ -25,6 +25,12 @@ public record ProdutoRequestDTO(
         Long categoriaId,
 
         @NotNull
-        Long fornecedorId
+        Long fornecedorId,
+
+        @NotNull
+        int quantidadeMinima,
+
+        @NotNull
+        int quantidadeAtual
 ) {
 }

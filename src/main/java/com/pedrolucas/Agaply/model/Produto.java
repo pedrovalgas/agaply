@@ -30,7 +30,9 @@ public class Produto {
 
     private boolean ativo;
 
-    private int quantidadeMinima = 0;
+    private int quantidadeMinima;
+
+    private int quantidadeAtual;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
