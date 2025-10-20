@@ -2,6 +2,7 @@ package com.pedrolucas.Agaply.mapper;
 
 import com.pedrolucas.Agaply.dto.fornecedor.FornecedorRequestDTO;
 import com.pedrolucas.Agaply.dto.fornecedor.FornecedorResponseDTO;
+import com.pedrolucas.Agaply.dto.fornecedor.FornecedorUpdateDTO;
 import com.pedrolucas.Agaply.model.Fornecedor;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -20,5 +21,5 @@ public interface FornecedorMapper {
     List<FornecedorResponseDTO> toResponseList(List<Fornecedor> entities);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void toUpdate(FornecedorResponseDTO dto, @MappingTarget Fornecedor entity);
+    void toUpdate(FornecedorUpdateDTO dto, @MappingTarget Fornecedor entity);
 }

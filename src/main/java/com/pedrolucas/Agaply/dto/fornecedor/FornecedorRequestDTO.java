@@ -1,19 +1,21 @@
 package com.pedrolucas.Agaply.dto.fornecedor;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class FornecedorRequestDTO {
+public record FornecedorRequestDTO (
 
-    private String nome;
-    private String cnpj;
-    private String telefone;
-    private String email;
+        @NotBlank
+        String nome,
 
+        @NotBlank
+        String cnpj,
+
+        @NotBlank
+        String telefone,
+
+        @NotBlank
+        @Email
+        String email
+){
 }
