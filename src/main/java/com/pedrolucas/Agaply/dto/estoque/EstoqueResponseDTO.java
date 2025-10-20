@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public record EstoqueResponseDTO(
         Long id,
-        BigDecimal quantidadeAtual,
-        BigDecimal quantidadeMinima
+        int quantidadeAtual,
+        int quantidadeMinima,
+        Long produtoId
 ) {
 }
