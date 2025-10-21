@@ -6,6 +6,8 @@ import com.pedrolucas.Agaply.dto.categoria.CategoriaUpdateDTO;
 import com.pedrolucas.Agaply.exception.CategoriaNotFoundException;
 import com.pedrolucas.Agaply.mapper.CategoriaMapper;
 import com.pedrolucas.Agaply.repository.CategoriaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,9 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public List<CategoriaResponseDTO> findAll(){
-        return mapper.toResponseList(repository.findAll());
+    public Page<CategoriaResponseDTO> findAll(Pageable pageable){
+        return repository.findAll(pageable)
+                .map(mapper::toResponse);
     }
 
     @Transactional(readOnly = true)

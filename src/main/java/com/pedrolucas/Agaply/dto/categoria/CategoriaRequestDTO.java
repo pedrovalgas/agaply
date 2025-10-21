@@ -1,3 +1,10 @@
 package com.pedrolucas.Agaply.dto.categoria;
 
-public record CategoriaRequestDTO(String nome, String descricao){}
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoriaRequestDTO(
+
+        @NotBlank
+        String nome,
+
+        String descricao){}
