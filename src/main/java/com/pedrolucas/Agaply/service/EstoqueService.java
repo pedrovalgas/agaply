@@ -1,5 +1,6 @@
 package com.pedrolucas.Agaply.service;
 
+import com.pedrolucas.Agaply.dto.estoque.EstoqueUpdateQuantidadeDTO;
 import com.pedrolucas.Agaply.dto.estoque.EstoqueRequestDTO;
 import com.pedrolucas.Agaply.dto.estoque.EstoqueResponseDTO;
 import com.pedrolucas.Agaply.exception.ConflictException;
@@ -58,7 +59,9 @@ public class EstoqueService {
     }
 
     @Transactional
-    public EstoqueResponseDTO updateQuantidade(Long produtoId, BigDecimal novaQuantidade) {
+    public EstoqueResponseDTO updateQuantidade(Long produtoId, EstoqueUpdateQuantidadeDTO dto) {
+        BigDecimal novaQuantidade = dto.novaQuantidade();
+
         var entity = estoqueRepository.findByProdutoId(produtoId)
                 .orElseThrow(() -> new EstoqueNotFoundException("Estoque não encontrado para este produto"));
 

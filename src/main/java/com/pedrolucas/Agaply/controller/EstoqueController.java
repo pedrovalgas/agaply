@@ -1,8 +1,10 @@
 package com.pedrolucas.Agaply.controller;
 
+import com.pedrolucas.Agaply.dto.estoque.EstoqueUpdateQuantidadeDTO;
 import com.pedrolucas.Agaply.dto.estoque.EstoqueRequestDTO;
 import com.pedrolucas.Agaply.dto.estoque.EstoqueResponseDTO;
 import com.pedrolucas.Agaply.service.EstoqueService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.math.BigDecimal;
 import java.net.URI;
 
 @RestController
@@ -46,13 +47,14 @@ public class EstoqueController {
     }
 
     @PutMapping("/produto/{produtoId}")
-    public ResponseEntity<EstoqueResponseDTO> update(@PathVariable Long id, @RequestBody BigDecimal novaQuantidade){
-        return ResponseEntity.ok(service.updateQuantidade(id, novaQuantidade));
+    public ResponseEntity<EstoqueResponseDTO> update(@PathVariable Long produtoId, @RequestBody @Valid EstoqueUpdateQuantidadeDTO dto){
+        EstoqueResponseDTO response = service.updateQuantidade(produtoId, dto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/produto/{produtoId}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        service.deleteByProdutoId(id);
+    public ResponseEntity<Void> delete(@PathVariable Long produtoId){
+        service.deleteByProdutoId(produtoId);
         return ResponseEntity.noContent().build();
     }
 
