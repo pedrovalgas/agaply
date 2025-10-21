@@ -14,6 +14,6 @@ import java.math.BigDecimal;
 public class ItemVendaRequestDTO {
 
     private Long produtoId;
-    private BigDecimal quantidade;
+    private int quantidade;
 
 }

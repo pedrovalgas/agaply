@@ -38,5 +38,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EstoqueInsuficienteException.class)
+    public ResponseEntity<String> handleEstoqueInsuficienteException(EstoqueInsuficienteException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(VendaNotFoundException.class)
+    public ResponseEntity<String> heandleVendaNotFoundException(VendaNotFoundException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VendaJaCanceladaException.class)
+    public ResponseEntity<String> handleVendaJaCanceladaException(VendaJaCanceladaException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }

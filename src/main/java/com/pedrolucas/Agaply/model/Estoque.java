@@ -20,9 +20,9 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantidadeAtual;
+    private BigDecimal quantidadeAtual;
 
-    private int quantidadeMinima;
+    private BigDecimal quantidadeMinima;
 
     @OneToOne
     @JoinColumn(name = "produto_id")

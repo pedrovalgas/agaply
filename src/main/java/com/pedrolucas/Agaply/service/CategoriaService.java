@@ -6,7 +6,7 @@ import com.pedrolucas.Agaply.dto.categoria.CategoriaUpdateDTO;
 import com.pedrolucas.Agaply.exception.CategoriaNotFoundException;
 import com.pedrolucas.Agaply.mapper.CategoriaMapper;
 import com.pedrolucas.Agaply.repository.CategoriaRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +26,12 @@ public class CategoriaService {
         return mapper.toResponse(repository.save(entity));
     }
 
+    @Transactional(readOnly = true)
     public List<CategoriaResponseDTO> findAll(){
         return mapper.toResponseList(repository.findAll());
     }
 
+    @Transactional(readOnly = true)
     public CategoriaResponseDTO findById(Long id){
         var entity = repository.findById(id)
                 .orElseThrow(() -> new CategoriaNotFoundException("Categoria não encontrada"));

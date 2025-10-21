@@ -25,6 +25,9 @@ public class Venda {
     private LocalDateTime dataHora;
     private BigDecimal valorTotal;
 
+    @Column(name = "cancelada", nullable = false)
+    private boolean cancelada = false;
+
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
     private List<ItemVenda> itensVenda;
 

@@ -1,11 +1,13 @@
 package com.pedrolucas.Agaply.dto.estoque;
 
+import java.math.BigDecimal;
+
 public record EstoqueRequestDTO(
 
         Long produtoId,
 
-        int quantidadeAtual,
+        BigDecimal quantidadeAtual,
 
-        int quantidadeMinima
+        BigDecimal quantidadeMinima
 ) {
 }

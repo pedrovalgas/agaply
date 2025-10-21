@@ -7,7 +7,7 @@ import com.pedrolucas.Agaply.exception.ConflictException;
 import com.pedrolucas.Agaply.exception.FornecedorNotFoundException;
 import com.pedrolucas.Agaply.mapper.FornecedorMapper;
 import com.pedrolucas.Agaply.repository.FornecedorRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +29,12 @@ public class FornecedorService {
         return mapper.toResponse(repository.save(entity));
     }
 
+    @Transactional(readOnly = true)
     public List<FornecedorResponseDTO> findAll(){
         return mapper.toResponseList(repository.findAll());
     }
 
+    @Transactional(readOnly = true)
     public FornecedorResponseDTO findById(Long id){
         var entity = repository.findById(id)
                 .orElseThrow(() -> new FornecedorNotFoundException("Fornecedor não encontrado"));

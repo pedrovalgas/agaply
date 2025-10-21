@@ -8,10 +8,11 @@ import com.pedrolucas.Agaply.exception.ProdutoNotFoundException;
 import com.pedrolucas.Agaply.mapper.EstoqueMapper;
 import com.pedrolucas.Agaply.repository.EstoqueRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -30,7 +31,9 @@ public class EstoqueService {
         if (estoqueRepository.existsByProdutoId(dto.produtoId())) {
             throw new ConflictException("Já existe um estoque cadastrado para este produto");
         }
-        if (dto.quantidadeAtual() < 0 || dto.quantidadeMinima() < 0) {
+
+        if (dto.quantidadeAtual().compareTo(BigDecimal.ZERO) < 0 ||
+                dto.quantidadeMinima().compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("A quantidade não pode ser negativa");
         }
 
@@ -40,6 +43,7 @@ public class EstoqueService {
         return mapper.toResponse(estoqueRepository.save(entity));
     }
 
+    @Transactional(readOnly = true)
     public EstoqueResponseDTO findByProdutoId(Long produtoId) {
         var entity = estoqueRepository.findByProdutoId(produtoId)
                 .orElseThrow(() -> new EstoqueNotFoundException("Estoque não encontrado para este produto"));
@@ -47,11 +51,11 @@ public class EstoqueService {
     }
 
     @Transactional
-    public EstoqueResponseDTO updateQuantidade(Long produtoId, int novaQuantidade) {
+    public EstoqueResponseDTO updateQuantidade(Long produtoId, BigDecimal novaQuantidade) {
         var entity = estoqueRepository.findByProdutoId(produtoId)
                 .orElseThrow(() -> new EstoqueNotFoundException("Estoque não encontrado para este produto"));
 
-        if (novaQuantidade < 0) {
+        if (novaQuantidade.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("A quantidade não pode ser negativa");
         }
 

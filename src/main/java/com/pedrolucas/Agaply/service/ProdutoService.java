@@ -8,7 +8,7 @@ import com.pedrolucas.Agaply.mapper.ProdutoMapper;
 import com.pedrolucas.Agaply.repository.CategoriaRepository;
 import com.pedrolucas.Agaply.repository.FornecedorRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,10 +48,12 @@ public class ProdutoService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<ProdutoResponseDTO> findAll(){
         return mapper.toResponseList(produtoRepository.findAll());
     }
 
+    @Transactional(readOnly = true)
     public ProdutoResponseDTO findById(Long id){
         var entity = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
