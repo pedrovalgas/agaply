@@ -10,6 +10,7 @@ public record VendaResponseDTO(
         Long id,
         LocalDateTime dataHora,
         BigDecimal valorTotal,
+        boolean cancelada,
         List<ItemVendaResponseDTO> itens
 ) {
 }

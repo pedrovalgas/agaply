@@ -7,13 +7,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class ItemVendaRequestDTO {
-
-    private Long produtoId;
-    private int quantidade;
-
+public record ItemVendaRequestDTO(
+        Long produtoId,
+        int quantidade
+) {
 }
