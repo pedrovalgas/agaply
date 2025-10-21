@@ -8,12 +8,13 @@ import com.pedrolucas.Agaply.exception.ProdutoNotFoundException;
 import com.pedrolucas.Agaply.mapper.EstoqueMapper;
 import com.pedrolucas.Agaply.repository.EstoqueRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +45,12 @@ public class EstoqueService {
     }
 
     @Transactional(readOnly = true)
+    public Page<EstoqueResponseDTO> findAll(Pageable pageable) {
+        return estoqueRepository.findAll(pageable)
+                .map(mapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
     public EstoqueResponseDTO findByProdutoId(Long produtoId) {
         var entity = estoqueRepository.findByProdutoId(produtoId)
                 .orElseThrow(() -> new EstoqueNotFoundException("Estoque não encontrado para este produto"));
@@ -71,7 +78,4 @@ public class EstoqueService {
         estoqueRepository.delete(entity);
     }
 
-    public List<EstoqueResponseDTO> findAll() {
-        return mapper.toResponseList(estoqueRepository.findAll());
-    }
 }
