@@ -1,6 +1,8 @@
 package com.pedrolucas.Agaply.dto.produto;
 
 
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.math.BigDecimal;
 
 public record ProdutoUpdateDTO(
@@ -8,6 +10,7 @@ public record ProdutoUpdateDTO(
 
         String codigoDeBarras,
 
+        @PositiveOrZero
         BigDecimal preco,
 
         String descricao,

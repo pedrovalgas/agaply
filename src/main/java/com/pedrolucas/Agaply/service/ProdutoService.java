@@ -8,11 +8,12 @@ import com.pedrolucas.Agaply.mapper.ProdutoMapper;
 import com.pedrolucas.Agaply.repository.CategoriaRepository;
 import com.pedrolucas.Agaply.repository.FornecedorRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -49,8 +50,10 @@ public class ProdutoService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProdutoResponseDTO> findAll(){
-        return mapper.toResponseList(produtoRepository.findAll());
+    public Page<ProdutoResponseDTO> findAll(Pageable pageable){
+        return produtoRepository.findAll(pageable)
+                .map(mapper::toResponse);
+
     }
 
     @Transactional(readOnly = true)
