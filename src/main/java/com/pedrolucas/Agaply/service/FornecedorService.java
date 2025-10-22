@@ -7,6 +7,8 @@ import com.pedrolucas.Agaply.exception.ConflictException;
 import com.pedrolucas.Agaply.exception.FornecedorNotFoundException;
 import com.pedrolucas.Agaply.mapper.FornecedorMapper;
 import com.pedrolucas.Agaply.repository.FornecedorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,9 @@ public class FornecedorService {
     }
 
     @Transactional(readOnly = true)
-    public List<FornecedorResponseDTO> findAll(){
-        return mapper.toResponseList(repository.findAll());
+    public Page<FornecedorResponseDTO> findAll(Pageable pageable){
+        return repository.findAll(pageable)
+                .map(mapper::toResponse);
     }
 
     @Transactional(readOnly = true)

@@ -5,7 +5,6 @@ import com.pedrolucas.Agaply.exception.ItemVendaNotFoundException;
 import com.pedrolucas.Agaply.exception.VendaNotFoundException;
 import com.pedrolucas.Agaply.mapper.ItemVendaMapper;
 import com.pedrolucas.Agaply.model.ItemVenda;
-import com.pedrolucas.Agaply.repository.EstoqueRepository;
 import com.pedrolucas.Agaply.repository.ItemVendaRepository;
 import com.pedrolucas.Agaply.repository.VendaRepository;
 import lombok.RequiredArgsConstructor;

@@ -23,7 +23,7 @@ public class EstoqueController {
 
 
     @PostMapping
-    public ResponseEntity<EstoqueResponseDTO> create(@RequestBody EstoqueRequestDTO dto){
+    public ResponseEntity<EstoqueResponseDTO> create(@RequestBody @Valid EstoqueRequestDTO dto){
         EstoqueResponseDTO response = service.create(dto);
 
         URI location = ServletUriComponentsBuilder
