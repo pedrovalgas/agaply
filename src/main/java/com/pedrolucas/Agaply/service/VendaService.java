@@ -14,6 +14,8 @@ import com.pedrolucas.Agaply.model.Venda;
 import com.pedrolucas.Agaply.repository.EstoqueRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
 import com.pedrolucas.Agaply.repository.VendaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -112,8 +114,9 @@ public class VendaService {
     }
 
     @Transactional(readOnly = true)
-    public List<VendaResponseDTO> findAll(){
-        return mapper.toResponseList(vendaRepository.findAll());
+    public Page<VendaResponseDTO> findAll(Pageable pageable){
+        return vendaRepository.findAll(pageable)
+                .map(mapper::toResponse);
     }
 
     @Transactional
