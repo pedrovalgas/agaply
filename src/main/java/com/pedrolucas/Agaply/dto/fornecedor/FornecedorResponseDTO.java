@@ -5,6 +5,7 @@ public record FornecedorResponseDTO(
         String nome,
         String cnpj,
         String telefone,
-        String email
+        String email,
+        boolean ativo
 ) {
 }

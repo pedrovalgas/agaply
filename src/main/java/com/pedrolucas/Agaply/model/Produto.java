@@ -28,7 +28,7 @@ public class Produto {
 
     private String descricao;
 
-    private boolean ativo;
+    private boolean ativo = true;
 
     private int quantidadeMinima;
 

@@ -31,6 +31,6 @@ public class Fornecedor {
     @OneToMany(mappedBy = "fornecedor")
     private List<Produto> produtos;
 
-    private boolean ativo;
+    private boolean ativo = true;
 
 }
