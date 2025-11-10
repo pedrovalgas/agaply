@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,6 @@ public class Venda {
     private boolean cancelada = false;
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
-    private List<ItemVenda> itensVenda;
+    private List<ItemVenda> itensVenda = new ArrayList<>();
 
 }

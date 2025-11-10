@@ -28,9 +28,6 @@ public record ProdutoRequestDTO(
         Long fornecedorId,
 
         @NotNull
-        int quantidadeMinima,
-
-        @NotNull
-        int quantidadeAtual
+        int quantidadeMinima
 ) {
 }

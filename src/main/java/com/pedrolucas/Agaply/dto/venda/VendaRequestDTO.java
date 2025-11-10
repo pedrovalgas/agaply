@@ -2,6 +2,7 @@ package com.pedrolucas.Agaply.dto.venda;
 
 import com.pedrolucas.Agaply.dto.itemvenda.ItemVendaRequestDTO;
 import com.pedrolucas.Agaply.model.ItemVenda;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public record VendaRequestDTO (
 
-        List<ItemVenda> itens,
+        @NotEmpty(message = "A venda deve ter pelo menos um item")
+        List<ItemVendaRequestDTO> itens,
 
         LocalDateTime data
 

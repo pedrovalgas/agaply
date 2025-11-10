@@ -21,8 +21,6 @@ public record ProdutoResponseDTO(
 
         int quantidadeMinima,
 
-        int quantidadeAtual,
-
         boolean ativo
 ) {
 }

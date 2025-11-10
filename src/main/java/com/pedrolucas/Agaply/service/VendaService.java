@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -41,6 +42,8 @@ public class VendaService {
         var entity = mapper.toEntity(dto);
         entity.setValorTotal(BigDecimal.ZERO);
 
+        entity.setDataHora(LocalDateTime.now());
+
         //Salva a Venda (sem itens) para pegar o ID
         Venda vendaSalva = vendaRepository.save(entity);
 
@@ -49,9 +52,14 @@ public class VendaService {
                 .map(item -> item.getProduto().getId())
                 .collect(Collectors.toSet());
 
-        //Busca todos os dados necessários (Estoque e Produto) em consultas únicas
-        Map<Long, Estoque> mapaDeEstoque = estoqueRepository.findAllById(idsDosProdutos).stream()
-                .collect(Collectors.toMap(Estoque::getId, Function.identity()));
+        List<Estoque> estoquesEncontrados = estoqueRepository.findAllByProdutoIdIn(idsDosProdutos);
+
+        //MAPEAR PELO ID DO PRODUTO (e não pelo Estoque.getId())
+        Map<Long, Estoque> mapaDeEstoque = estoquesEncontrados.stream()
+                .collect(Collectors.toMap(
+                        estoque -> estoque.getProduto().getId(),
+                        Function.identity()
+                ));
 
         Map<Long, Produto> mapaDeProdutos = produtoRepository.findAllById(idsDosProdutos).stream()
                 .collect(Collectors.toMap(Produto::getId, Function.identity()));
@@ -91,6 +99,8 @@ public class VendaService {
             //Baixa de Estoque (em memória)
             BigDecimal novaQuantidade = estoque.getQuantidadeAtual().subtract(item.getQuantidade());
             estoque.setQuantidadeAtual(novaQuantidade);
+
+            item.setProduto(produto);
 
             //Associa o item à Venda (que já tem ID)
             item.setVenda(vendaSalva);
@@ -136,9 +146,15 @@ public class VendaService {
                 .map(item -> item.getProduto().getId())
                 .collect(Collectors.toSet());
 
-        //Busca os estoques (igual ao create)
-        Map<Long, Estoque> mapaDeEstoque = estoqueRepository.findAllById(idsDosProdutos).stream()
-                .collect(Collectors.toMap(Estoque::getId, Function.identity()));
+        //busca por id do produto
+        List<Estoque> estoquesEncontrados = estoqueRepository.findAllByProdutoIdIn(idsDosProdutos);
+
+        //mapeia usando o id como chave
+        Map<Long, Estoque> mapaDeEstoque = estoquesEncontrados.stream()
+                .collect(Collectors.toMap(
+                        estoque -> estoque.getProduto().getId(),
+                        Function.identity()
+                        ));
 
         //Loop para DEVOLVER o estoque
         for (ItemVenda item : entity.getItensVenda()) {
@@ -153,6 +169,7 @@ public class VendaService {
             }
             BigDecimal novaQuantidade = estoque.getQuantidadeAtual().add(item.getQuantidade());
             estoque.setQuantidadeAtual(novaQuantidade);
+
         }
 
         //Marca a Venda como cancelada

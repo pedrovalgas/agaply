@@ -32,8 +32,6 @@ public class Produto {
 
     private int quantidadeMinima;
 
-    private int quantidadeAtual;
-
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;

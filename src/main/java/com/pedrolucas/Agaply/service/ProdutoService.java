@@ -5,7 +5,10 @@ import com.pedrolucas.Agaply.dto.produto.ProdutoResponseDTO;
 import com.pedrolucas.Agaply.dto.produto.ProdutoUpdateDTO;
 import com.pedrolucas.Agaply.exception.*;
 import com.pedrolucas.Agaply.mapper.ProdutoMapper;
+import com.pedrolucas.Agaply.model.Estoque;
+import com.pedrolucas.Agaply.model.Produto;
 import com.pedrolucas.Agaply.repository.CategoriaRepository;
+import com.pedrolucas.Agaply.repository.EstoqueRepository;
 import com.pedrolucas.Agaply.repository.FornecedorRepository;
 import com.pedrolucas.Agaply.repository.ProdutoRepository;
 import org.springframework.data.domain.Page;
@@ -13,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 
 @Service
@@ -23,6 +28,7 @@ public class ProdutoService {
     private final ProdutoMapper mapper;
     private final FornecedorRepository fornecedorRepository;
     private final CategoriaRepository categoriaRepository;
+    private final EstoqueRepository estoqueRepository;
 
 
     @Transactional
@@ -45,7 +51,20 @@ public class ProdutoService {
         entity.setFornecedor(fornecedor);
         entity.setCategoria(categoria);
 
-        return mapper.toResponse(produtoRepository.save(entity));
+        Produto produtoSalvo = produtoRepository.save(entity);
+
+        //Lógica para criar o Estoque
+        Estoque novoEstoque = new Estoque();
+        novoEstoque.setProduto(produtoSalvo);
+        novoEstoque.setQuantidadeAtual(BigDecimal.ZERO);
+
+        //Foi preciso forçar a conversão para BigDecimal
+        int qtdMinimaInt = produtoSalvo.getQuantidadeMinima();
+        novoEstoque.setQuantidadeMinima(BigDecimal.valueOf(qtdMinimaInt));
+
+        estoqueRepository.save(novoEstoque);
+
+        return mapper.toResponse(produtoSalvo);
 
     }
 
