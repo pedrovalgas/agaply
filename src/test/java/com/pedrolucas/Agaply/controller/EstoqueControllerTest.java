@@ -37,7 +37,7 @@ class EstoqueControllerTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17.5-alpine");
 
     @Autowired
     private MockMvc mockMvc;
@@ -54,7 +54,7 @@ class EstoqueControllerTest {
     private EstoqueRepository estoqueRepository;
 
     private Produto produtoSalvo;
-    
+
     @BeforeEach
     void setup() {
         Categoria c = new Categoria();

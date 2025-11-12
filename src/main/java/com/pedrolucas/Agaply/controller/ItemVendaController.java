@@ -27,4 +27,6 @@ public class ItemVendaController {
     public ResponseEntity<List<ItemVendaResponseDTO>> findAllByVendaId(@PathVariable Long vendaId) {
         return ResponseEntity.ok(service.findAllByVendaId(vendaId));
     }
+
+
 }
