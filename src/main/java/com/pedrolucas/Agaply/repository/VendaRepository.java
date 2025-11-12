@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface VendaRepository extends JpaRepository<Venda, Long> {
-    @Query("SELECT v FROM Venda v JOIN FETCH v.itensVenda WHERE v.id = :id")
+    @Query("SELECT v FROM Venda v LEFT JOIN FETCH v.itensVenda WHERE v.id = :id")
     Optional<Venda> findByIdWithItens(Long id);
 }

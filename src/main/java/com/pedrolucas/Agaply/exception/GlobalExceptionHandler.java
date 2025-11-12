@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(VendaJaCanceladaException.class)
     public ResponseEntity<String> handleVendaJaCanceladaException(VendaJaCanceladaException e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ItemVendaNotFoundException.class)
